@@ -1,6 +1,6 @@
 /* ============================================
-   SOLICITATRANSPARENCIA
-   Estilos profesionales - Versión 1.0
+   SolicitaTransparencia
+   Estilos profesionales - Versión 1.1 (Optimizado móvil)
    ============================================ */
 
 /* ----- RESET Y VARIABLES ----- */
@@ -293,50 +293,6 @@ footer p {
     display: none;
 }
 
-/* ----- RESPONSIVE ----- */
-@media (max-width: 768px) {
-    .container {
-        padding: 0 var(--spacing-md);
-    }
-
-    .paso {
-        padding: var(--spacing-lg);
-    }
-
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    .tagline {
-        font-size: 1rem;
-    }
-
-    .fecha-wrapper {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-sm);
-    }
-
-    .acciones {
-        flex-direction: column;
-    }
-
-    .btn-principal,
-    .btn-secundario {
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .telefono-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .codigo-pais {
-        text-align: center;
-    }
-}
-
 /* ----- ANIMACIONES ----- */
 @keyframes fadeIn {
     from {
@@ -387,7 +343,7 @@ footer p {
     visibility: visible;
 }
 
-/* Radio buttons personalizados */
+/* ----- RADIO BUTTONS PERSONALIZADOS ----- */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -455,18 +411,7 @@ footer p {
     color: #856404;
 }
 
-@media (max-width: 768px) {
-    .radio-label {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .radio-label input[type="radio"] {
-        margin-bottom: 0.5rem;
-    }
-}
-
-/* Aviso para Firefox */
+/* ----- AVISO PARA FIREFOX ----- */
 .firefox-warning {
     background: #fff3cd;
     border-left: 4px solid #ffc107;
@@ -507,19 +452,7 @@ footer p {
     opacity: 0.7;
 }
 
-@media (max-width: 768px) {
-    .firefox-warning {
-        flex-wrap: wrap;
-    }
-
-    .warning-close {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-    }
-}
-
-/* Banner de actualización PWA */
+/* ----- BANNER DE ACTUALIZACIÓN PWA ----- */
 #update-notification {
     position: fixed;
     bottom: 20px;
@@ -582,14 +515,7 @@ footer p {
     }
 }
 
-@media (max-width: 768px) {
-    .update-banner {
-        flex-direction: column;
-        text-align: center;
-    }
-}
-
-/* Banner de reporte de problemas */
+/* ----- BANNER DE REPORTE DE PROBLEMAS ----- */
 .report-banner {
     background: #e8f4fd;
     border-top: 1px solid #cde5f5;
@@ -631,14 +557,230 @@ footer p {
     color: #e67e22;
 }
 
+/* ============================================
+   RESPONSIVE - OPTIMIZADO PARA MÓVIL
+   ============================================ */
+
 @media (max-width: 768px) {
+
+    /* Aumentar fuente base para mejor legibilidad */
+    body {
+        font-size: 16px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    /* Header más compacto */
+    header {
+        padding: 1.5rem 0;
+        margin-bottom: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .tagline {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    /* Tarjetas más ajustadas */
+    .paso {
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border-radius: 12px;
+    }
+
+    .paso h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Campos de formulario más cómodos */
+    input,
+    select,
+    textarea {
+        padding: 12px 12px;
+        font-size: 16px;
+        border-radius: 8px;
+    }
+
+    label {
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+    }
+
+    small,
+    .info-text {
+        font-size: 0.75rem;
+    }
+
+    /* Teléfono: mantener en línea en móvil */
+    .telefono-wrapper {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .codigo-pais {
+        padding: 12px 12px;
+        font-size: 16px;
+    }
+
+    /* Fecha: cada campo en su propia línea */
+    .fecha-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .fecha-wrapper select {
+        width: 100%;
+    }
+
+    /* Vista previa más legible */
+    .preview-box {
+        padding: 1rem;
+    }
+
+    .vista-previa {
+        padding: 1rem;
+        font-size: 0.85rem;
+        max-height: 350px;
+    }
+
+    /* Botones más compactos y centrados */
+    .acciones {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-principal,
+    .btn-secundario {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    /* Selector de correo (radio buttons) más compacto */
+    .radio-group {
+        gap: 0.75rem;
+    }
+
+    .radio-label {
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .radio-content code {
+        font-size: 0.75rem;
+        word-break: break-all;
+    }
+
+    /* Banner de reporte */
     .report-content {
         flex-direction: column;
         text-align: center;
         gap: 0.5rem;
+        padding: 0.5rem;
     }
 
-    .report-icon {
-        font-size: 1.8rem;
+    .report-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+
+    /* Footer más compacto */
+    footer {
+        padding: 1.5rem 0;
+        margin-top: 1rem;
+    }
+
+    footer p {
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Aviso Firefox */
+    .firefox-warning {
+        flex-wrap: wrap;
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .warning-icon {
+        font-size: 1.2rem;
+    }
+
+    /* Banner de actualización PWA */
+    .update-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px 16px;
+    }
+
+    .update-banner span {
+        font-size: 0.85rem;
+    }
+
+    .update-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Móviles pequeños (menos de 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 10px;
+    }
+
+    .paso {
+        padding: 1rem;
+    }
+
+    .paso h2 {
+        font-size: 1.2rem;
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 10px 10px;
+        font-size: 15px;
+    }
+
+    .btn-principal,
+    .btn-secundario {
+        padding: 10px;
+        font-size: 0.95rem;
+    }
+
+    .vista-previa {
+        font-size: 0.8rem;
+        padding: 0.75rem;
+    }
+
+    .radio-content strong {
+        font-size: 0.85rem;
+    }
+
+    .radio-content code {
+        font-size: 0.7rem;
+    }
+
+    .badge {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.4rem;
+    }
+
+    .report-text {
+        font-size: 0.8rem;
+    }
+
+    footer p {
+        font-size: 0.75rem;
     }
 }
