@@ -1,17 +1,17 @@
 // ============================================
-// Service Worker - SolicitaTransparencia
-// Versión dinámica con activación inmediata
+// Service Worker - SolicitaTransparencia v9
+// Actualización automática con recarga forzada
 // ============================================
 
-// Versión del cache - CAMBIA ESTE NÚMERO CADA VEZ QUE SUBAS CAMBIOS
-const CACHE_VERSION = 'v5';
+// Versión manual - CAMBIAR CADA VEZ QUE SUBAS CAMBIOS
+const CACHE_VERSION = 'v9';
 const CACHE_NAME = `solicita-transparencia-${CACHE_VERSION}`;
 
 const urlsToCache = [
   '/solicitatransparencia/',
   '/solicitatransparencia/index.html',
   '/solicitatransparencia/404.html',
-  '/solicitatransparencia/css/styles.css',
+  '/solicitatransparencia/css/styles.css?v=9',
   '/solicitatransparencia/js/app.js',
   '/solicitatransparencia/js/validaciones.js',
   '/solicitatransparencia/js/mailGenerator.js',
@@ -20,7 +20,7 @@ const urlsToCache = [
   '/solicitatransparencia/data/tipos_informacion.json'
 ];
 
-// Instalación: cachear archivos y forzar activación
+// Instalación: cachear archivos
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -28,12 +28,13 @@ self.addEventListener('install', event => {
         console.log(`Cache ${CACHE_NAME} instalado`);
         return cache.addAll(urlsToCache);
       })
-      .catch(err => console.error('Error cacheando archivos:', err))
+      .catch(err => console.error('Error cacheando:', err))
   );
+  // Forzar activación inmediata
   self.skipWaiting();
 });
 
-// Activación: eliminar caches viejos y tomar control
+// Activación: eliminar caches viejos y recargar todos los clientes
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -46,12 +47,13 @@ self.addEventListener('activate', event => {
         })
       );
     }).then(() => {
+      // Tomar control de todos los clientes
       return self.clients.claim();
     })
   );
 });
 
-// Estrategia: Network first con fallback a cache
+// Estrategia: Network first
 self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
@@ -62,15 +64,14 @@ self.addEventListener('fetch', event => {
         });
         return response;
       })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(event.request))
   );
 });
 
-// Escuchar mensajes del cliente
+// Mensaje para forzar recarga desde el cliente
 self.addEventListener('message', event => {
   if (event.data === 'skipWaiting') {
     self.skipWaiting();
   }
 });
+  

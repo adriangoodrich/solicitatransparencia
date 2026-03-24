@@ -1,6 +1,6 @@
 /* ============================================
-   SolicitaTransparencia - v8 (final)
-   Fix zoom-out Android + refuerzo de desbordamiento
+   SolicitaTransparencia - v9
+   Layout responsive para móvil con fixes de desbordamiento
    ============================================ */
 
 :root {
@@ -25,7 +25,6 @@
     --input-height: 44px;
 }
 
-/* FIX 1: Prevenir desbordamiento horizontal que causa zoom-out */
 html,
 body {
     overflow-x: hidden;
@@ -39,7 +38,6 @@ body {
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    max-width: 100%;
 }
 
 html {
@@ -64,7 +62,6 @@ body {
     width: 100%;
 }
 
-/* Header */
 header {
     background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     color: white;
@@ -83,7 +80,6 @@ header h1 {
     opacity: 0.9;
 }
 
-/* Tarjetas */
 .paso {
     background: white;
     border-radius: var(--border-radius);
@@ -101,7 +97,6 @@ header h1 {
     padding-bottom: 2px;
 }
 
-/* Formulario */
 .form-group {
     margin-bottom: var(--spacing-md);
 }
@@ -168,10 +163,8 @@ small,
     color: var(--color-gray);
     margin-top: 4px;
     display: block;
-    word-break: break-word;
 }
 
-/* Teléfono */
 .telefono-wrapper {
     display: flex;
     gap: var(--spacing-sm);
@@ -195,7 +188,6 @@ small,
     flex: 1;
 }
 
-/* Fecha: tres selects en línea */
 .fecha-wrapper {
     display: flex;
     gap: var(--spacing-sm);
@@ -206,7 +198,6 @@ small,
     text-align: center;
 }
 
-/* Aviso validación */
 .aviso-validacion {
     background: #fff3e0;
     padding: var(--spacing-sm);
@@ -218,10 +209,8 @@ small,
 .aviso-validacion small {
     color: #856404;
     margin: 0;
-    word-break: break-word;
 }
 
-/* Vista previa - FIX 3: evitar desbordamiento de texto largo */
 .preview-box {
     background: var(--color-gray-light);
     border-radius: 12px;
@@ -244,7 +233,6 @@ small,
     border: 1px solid #ddd;
 }
 
-/* Botones */
 .acciones {
     display: flex;
     gap: var(--spacing-md);
@@ -276,7 +264,6 @@ small,
     border: 1px solid #ccc;
 }
 
-/* Radio buttons */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -293,7 +280,6 @@ small,
     border-radius: 12px;
     background: white;
     cursor: pointer;
-    transition: background 0.2s;
 }
 
 .radio-label:hover {
@@ -351,7 +337,6 @@ small,
     color: #856404;
 }
 
-/* Banner reporte */
 .report-banner {
     background: #e8f4fd;
     padding: var(--spacing-sm) 0;
@@ -373,7 +358,6 @@ small,
     text-decoration: underline;
 }
 
-/* Footer */
 footer {
     background: var(--color-gray-dark);
     color: white;
@@ -386,12 +370,10 @@ footer a {
     color: var(--color-secondary);
 }
 
-/* Utilidades */
 .hidden {
     display: none;
 }
 
-/* Firefox warning */
 .firefox-warning {
     background: #fff3cd;
     padding: 8px 12px;
@@ -402,7 +384,6 @@ footer a {
     font-size: 0.75rem;
 }
 
-/* Update banner */
 #update-notification {
     position: fixed;
     bottom: 10px;
@@ -418,24 +399,11 @@ footer a {
     border-radius: 40px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     gap: 10px;
-    flex-wrap: wrap;
     font-size: 0.8rem;
+    text-align: center;
 }
-
-.update-btn {
-    background: white;
-    color: var(--color-primary);
-    border: none;
-    padding: 6px 12px;
-    border-radius: 40px;
-    font-weight: 600;
-}
-
-/* ============================================
-   RESPONSIVE (forzado para móvil)
-   ============================================ */
 
 @media (max-width: 600px) {
     .form-row {
