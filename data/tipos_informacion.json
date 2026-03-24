@@ -1,0 +1,48 @@
+{
+    "metadata": {
+        "ultima_actualizacion": "2026-03-23",
+        "version": 1
+    },
+    "tipos": [
+        {
+            "id": "informe",
+            "nombre": "Informe de fiscalización",
+            "icono": "📄"
+        },
+        {
+            "id": "acta",
+            "nombre": "Acta de constatación",
+            "icono": "📋"
+        },
+        {
+            "id": "resolucion",
+            "nombre": "Resolución administrativa",
+            "icono": "⚖️"
+        },
+        {
+            "id": "estado",
+            "nombre": "Estado actual del procedimiento",
+            "icono": "📊"
+        },
+        {
+            "id": "medidas",
+            "nombre": "Medidas adoptadas",
+            "icono": "🛠️"
+        },
+        {
+            "id": "sanciones",
+            "nombre": "Sanciones aplicadas",
+            "icono": "💰"
+        },
+        {
+            "id": "todos",
+            "nombre": "Todos los documentos del caso",
+            "icono": "📁"
+        },
+        {
+            "id": "otro",
+            "nombre": "Otro (especificar)",
+            "icono": "📝"
+        }
+    ]
+}

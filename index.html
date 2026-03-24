@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Solicita el resultado de tus reclamos municipales de forma simple y rápida">
+    <title>SolicitaTransparencia | Solicita el resultado de tu reclamo municipal</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>SolicitaTransparencia</h1>
+            <p class="tagline">Solicita el resultado de tu reclamo municipal en 3 pasos simples</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- PASO 1: Ubicación -->
+        <section class="paso">
+            <h2>Paso 1: ¿Dónde hiciste el reclamo?</h2>
+            <div class="form-group">
+                <label for="region">Región *</label>
+                <select id="region" required>
+                    <option value="">Cargando regiones...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comuna">Comuna *</label>
+                <select id="comuna" required disabled>
+                    <option value="">Primero selecciona una región</option>
+                </select>
+            </div>
+            <small id="fecha-actualizacion" class="info-text"></small>
+        </section>
+
+        <!-- PASO 2: Datos del solicitante -->
+        <section class="paso">
+            <h2>Paso 2: Tus datos</h2>
+            <div class="form-group">
+                <label for="nombre">Nombre completo *</label>
+                <input type="text" id="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo electrónico *</label>
+                <input type="email" id="correo" required>
+                <small>La respuesta llegará a este correo</small>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono (opcional)</label>
+                <div class="telefono-wrapper">
+                    <span class="codigo-pais">+56</span>
+                    <input type="tel" id="telefono" placeholder="9 1234 5678">
+                </div>
+                <small>Solo para que la municipalidad te contacte si tiene dudas</small>
+            </div>
+        </section>
+
+        <!-- PASO 3: ¿Qué reclamo quieres consultar? -->
+        <section class="paso">
+            <h2>Paso 3: ¿Qué reclamo quieres consultar?</h2>
+
+            <div class="form-group">
+                <label for="numeroReclamo">Número de reclamo</label>
+                <input type="text" id="numeroReclamo" placeholder="Ej: RM-1234-2026">
+                <small>El número que te dieron cuando hiciste el reclamo</small>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección del hecho</label>
+                <input type="text" id="direccion" placeholder="Ej: Av. Providencia 123">
+                <small>La dirección donde ocurrió el problema que denunciaste</small>
+            </div>
+            <div class="aviso-validacion">
+                <small>⚠️ Debes ingresar al menos el número de reclamo o la dirección</small>
+            </div>
+
+            <div class="form-group">
+                <label>Fecha del reclamo *</label>
+                <div class="fecha-wrapper">
+                    <select id="dia">
+                        <option value="">Día</option>
+                    </select>
+                    <select id="mes" required>
+                        <option value="">Mes</option>
+                    </select>
+                    <select id="anio" required>
+                        <option value="">Año</option>
+                    </select>
+                </div>
+                <small>💡 Si no recuerdas el día exacto, deja el día en blanco</small>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoInfo">Tipo de información que solicitas *</label>
+                <select id="tipoInfo" required>
+                    <option value="">Cargando tipos...</option>
+                </select>
+            </div>
+            <div id="campoOtro" class="form-group hidden">
+                <label for="otroTexto">Especifica tu solicitud *</label>
+                <textarea id="otroTexto" rows="3"
+                    placeholder="Describe claramente la información que necesitas..."></textarea>
+            </div>
+        </section>
+
+        <!-- VISTA PREVIA Y ENVÍO -->
+        <section class="paso">
+            <h2>Vista previa de tu solicitud</h2>
+            <div class="preview-box">
+                <div id="vistaPrevia" class="vista-previa">
+                    <!-- Aquí se mostrará el texto generado -->
+                </div>
+            </div>
+            <div class="acciones">
+                <button id="btnEditar" class="btn-secundario" type="button">✏️ Editar texto</button>
+                <button id="btnEnviar" class="btn-principal" type="button">📧 Abrir mi correo para enviar</button>
+            </div>
+            <p class="info-legal">
+                Al hacer clic se abrirá tu programa de correo con el mensaje ya redactado.<br>
+                Solo debes revisar y hacer clic en "Enviar".
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Esta herramienta no es oficial. Facilita el proceso de solicitud bajo la Ley N° 20.285.</p>
+            <p>Plazo de respuesta: <strong>20 días hábiles</strong> (artículo 14 de la Ley de Transparencia)</p>
+            <p>
+                <a href="#" target="_blank">Ver código fuente</a> |
+                <a href="#" target="_blank">Cómo contribuir</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/mailGenerator.js"></script>
+    <script src="js/uiHelpers.js"></script>
+</body>
+
+</html>
