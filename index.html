@@ -3,12 +3,23 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Solicita el resultado de tus reclamos municipales de forma simple y rápida">
     <title>SolicitaTransparencia | Solicita el resultado de tu reclamo municipal</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/solicitatransparencia/manifest.json">
+    <meta name="theme-color" content="#0a4b6e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SoliTrans">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 </head>
 
 <body>
@@ -141,16 +152,68 @@
             <p>Esta herramienta no es oficial. Facilita el proceso de solicitud bajo la Ley N° 20.285.</p>
             <p>Plazo de respuesta: <strong>20 días hábiles</strong> (artículo 14 de la Ley de Transparencia)</p>
             <p>
-                <a href="#" target="_blank">Ver código fuente</a> |
-                <a href="#" target="_blank">Cómo contribuir</a>
+                <a href="https://github.com/adriangoodrich/solicitatransparencia" target="_blank">Ver código fuente</a>
+                |
+                <a href="https://github.com/adriangoodrich/solicitatransparencia/blob/main/docs/contribuir.md"
+                    target="_blank">Cómo contribuir</a>
             </p>
         </div>
     </footer>
 
+    <!-- JavaScript -->
     <script src="js/uiHelpers.js"></script>
     <script src="js/validaciones.js"></script>
     <script src="js/mailGenerator.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/solicitatransparencia/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito:', registration);
+
+                    // Detectar nueva versión y notificar al usuario
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                // Nueva versión disponible
+                                mostrarNotificacionActualizacion();
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al registrar Service Worker:', error);
+                });
+        }
+
+        function mostrarNotificacionActualizacion() {
+            // Evitar duplicados
+            if (document.getElementById('update-notification')) return;
+
+            const notificacion = document.createElement('div');
+            notificacion.id = 'update-notification';
+            notificacion.innerHTML = `
+                <div class="update-banner">
+                    <span>🔄 Nueva versión disponible</span>
+                    <button id="update-btn" class="update-btn">Actualizar ahora</button>
+                    <button id="close-btn" class="close-btn">✖</button>
+                </div>
+            `;
+            document.body.appendChild(notificacion);
+
+            document.getElementById('update-btn').addEventListener('click', () => {
+                // Forzar actualización
+                window.location.reload();
+            });
+
+            document.getElementById('close-btn').addEventListener('click', () => {
+                notificacion.remove();
+            });
+        }
+    </script>
 </body>
 
 </html>

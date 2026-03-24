@@ -386,6 +386,7 @@ footer p {
 .tooltip:hover .tooltip-text {
     visibility: visible;
 }
+
 /* Radio buttons personalizados */
 .radio-group {
     display: flex;
@@ -462,5 +463,75 @@ footer p {
 
     .radio-label input[type="radio"] {
         margin-bottom: 0.5rem;
+    }
+}
+
+/* Banner de actualización PWA */
+#update-notification {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    z-index: 10000;
+    animation: slideUp 0.3s ease-out;
+}
+
+.update-banner {
+    background: var(--color-primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.update-banner span {
+    font-size: 0.95rem;
+}
+
+.update-btn {
+    background: white;
+    color: var(--color-primary);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.update-btn:hover {
+    transform: scale(1.02);
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .update-banner {
+        flex-direction: column;
+        text-align: center;
     }
 }

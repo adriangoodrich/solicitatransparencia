@@ -1,0 +1,25 @@
+{
+  "name": "SolicitaTransparencia",
+  "short_name": "SoliTrans",
+  "description": "Solicita el resultado de tus reclamos municipales de forma simple y rápida",
+  "start_url": "/solicitatransparencia/",
+  "scope": "/solicitatransparencia/",
+  "display": "standalone",
+  "background_color": "#0a4b6e",
+  "theme_color": "#0a4b6e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
