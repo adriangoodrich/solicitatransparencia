@@ -7,8 +7,8 @@
     <meta name="description" content="Solicita el resultado de tus reclamos municipales de forma simple y rápida">
     <title>SolicitaTransparencia | Solicita el resultado de tu reclamo municipal</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS con versión para romper caché -->
+    <link rel="stylesheet" href="css/styles.css?v=5">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="/solicitatransparencia/manifest.json">
@@ -225,7 +225,6 @@
     <script>
         let refreshing = false;
 
-        // Forzar recarga cuando el Service Worker cambie
         navigator.serviceWorker.addEventListener('controllerchange', () => {
             if (refreshing) return;
             refreshing = true;
@@ -237,13 +236,11 @@
                 .then(registration => {
                     console.log('Service Worker registrado:', registration);
 
-                    // Detectar si hay una nueva versión esperando
                     if (registration.waiting) {
                         console.log('Hay un SW esperando');
                         mostrarNotificacionActualizacion(registration);
                     }
 
-                    // Detectar cuando se encuentra una nueva versión
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
                         console.log('Nueva versión detectada');
@@ -260,12 +257,11 @@
                     console.error('Error al registrar Service Worker:', error);
                 });
 
-            // Verificar actualizaciones periódicamente
             setInterval(() => {
                 navigator.serviceWorker.getRegistration().then(reg => {
                     if (reg) reg.update();
                 });
-            }, 60 * 60 * 1000); // Cada hora
+            }, 60 * 60 * 1000);
         }
 
         function mostrarNotificacionActualizacion(registration) {
@@ -283,11 +279,9 @@
             document.body.appendChild(notificacion);
 
             document.getElementById('update-btn').addEventListener('click', () => {
-                // Forzar la actualización
                 if (registration && registration.waiting) {
                     registration.waiting.postMessage('skipWaiting');
                 }
-                // Recargar después de un breve momento
                 setTimeout(() => {
                     window.location.reload();
                 }, 100);

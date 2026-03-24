@@ -4,7 +4,7 @@
 // ============================================
 
 // Versión del cache - CAMBIA ESTE NÚMERO CADA VEZ QUE SUBAS CAMBIOS
-const CACHE_VERSION = 'v4';
+const CACHE_VERSION = 'v5';
 const CACHE_NAME = `solicita-transparencia-${CACHE_VERSION}`;
 
 const urlsToCache = [
@@ -30,7 +30,6 @@ self.addEventListener('install', event => {
       })
       .catch(err => console.error('Error cacheando archivos:', err))
   );
-  // Forzar que el nuevo SW tome el control inmediatamente
   self.skipWaiting();
 });
 
@@ -47,7 +46,6 @@ self.addEventListener('activate', event => {
         })
       );
     }).then(() => {
-      // Tomar control de todos los clientes abiertos
       return self.clients.claim();
     })
   );
