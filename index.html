@@ -166,6 +166,47 @@
     <script src="js/mailGenerator.js"></script>
     <script src="js/app.js"></script>
 
+    <!-- Aviso para Firefox (no soporta instalación PWA en Windows) -->
+    <script>
+        (function () {
+            // Detectar Firefox en Windows (no Android)
+            const isFirefoxOnWindows = navigator.userAgent.includes('Firefox') &&
+                !navigator.userAgent.includes('Android') &&
+                navigator.platform?.includes('Win');
+
+            if (isFirefoxOnWindows) {
+                // Evitar duplicados
+                if (document.getElementById('firefox-warning')) return;
+
+                const warningDiv = document.createElement('div');
+                warningDiv.id = 'firefox-warning';
+                warningDiv.innerHTML = `
+                    <div class="firefox-warning">
+                        <div class="warning-icon">💡</div>
+                        <div class="warning-content">
+                            <strong>Consejo para Firefox:</strong> Puedes usar esta página normalmente, pero si quieres <strong>instalarla como app</strong> en tu computadora, te recomendamos usar <strong>Chrome</strong> o <strong>Edge</strong>.
+                        </div>
+                        <button class="warning-close" aria-label="Cerrar">✖</button>
+                    </div>
+                `;
+
+                // Insertar al inicio del main
+                const main = document.querySelector('main');
+                if (main) {
+                    main.insertBefore(warningDiv, main.firstChild);
+                }
+
+                // Botón cerrar
+                const closeBtn = warningDiv.querySelector('.warning-close');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        warningDiv.remove();
+                    });
+                }
+            }
+        })();
+    </script>
+
     <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
@@ -205,7 +246,6 @@
             document.body.appendChild(notificacion);
 
             document.getElementById('update-btn').addEventListener('click', () => {
-                // Forzar actualización
                 window.location.reload();
             });
 

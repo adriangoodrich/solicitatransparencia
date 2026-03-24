@@ -535,3 +535,55 @@ footer p {
         text-align: center;
     }
 }
+/* Aviso para Firefox */
+.firefox-warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+}
+
+.warning-content {
+    flex: 1;
+    color: #856404;
+}
+
+.warning-content strong {
+    font-weight: 600;
+}
+
+.warning-close {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #856404;
+    padding: 4px;
+    line-height: 1;
+}
+
+.warning-close:hover {
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .firefox-warning {
+        flex-wrap: wrap;
+    }
+
+    .warning-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+    }
+}
