@@ -1,5 +1,5 @@
 /* ============================================
-   SOLICITATRANSPARENCIA.CL
+   SOLICITATRANSPARENCIA
    Estilos profesionales - Versión 1.0
    ============================================ */
 
@@ -466,6 +466,59 @@ footer p {
     }
 }
 
+/* Aviso para Firefox */
+.firefox-warning {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.warning-icon {
+    font-size: 1.5rem;
+}
+
+.warning-content {
+    flex: 1;
+    color: #856404;
+}
+
+.warning-content strong {
+    font-weight: 600;
+}
+
+.warning-close {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #856404;
+    padding: 4px;
+    line-height: 1;
+}
+
+.warning-close:hover {
+    opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+    .firefox-warning {
+        flex-wrap: wrap;
+    }
+
+    .warning-close {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+    }
+}
+
 /* Banner de actualización PWA */
 #update-notification {
     position: fixed;
@@ -535,55 +588,57 @@ footer p {
         text-align: center;
     }
 }
-/* Aviso para Firefox */
-.firefox-warning {
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.9rem;
-    position: relative;
+
+/* Banner de reporte de problemas */
+.report-banner {
+    background: #e8f4fd;
+    border-top: 1px solid #cde5f5;
+    border-bottom: 1px solid #cde5f5;
+    padding: 1rem 0;
+    margin-bottom: 0;
 }
 
-.warning-icon {
+.report-content {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.report-icon {
     font-size: 1.5rem;
 }
 
-.warning-content {
+.report-text {
     flex: 1;
-    color: #856404;
+    text-align: center;
+    color: #0a4b6e;
 }
 
-.warning-content strong {
+.report-text strong {
     font-weight: 600;
 }
 
-.warning-close {
-    background: transparent;
-    border: none;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: #856404;
-    padding: 4px;
-    line-height: 1;
+.report-text a {
+    color: #0a4b6e;
+    font-weight: 600;
+    text-decoration: underline;
 }
 
-.warning-close:hover {
-    opacity: 0.7;
+.report-text a:hover {
+    color: #e67e22;
 }
 
 @media (max-width: 768px) {
-    .firefox-warning {
-        flex-wrap: wrap;
+    .report-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
     }
 
-    .warning-close {
-        position: absolute;
-        top: 8px;
-        right: 8px;
+    .report-icon {
+        font-size: 1.8rem;
     }
 }
