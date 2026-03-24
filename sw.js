@@ -1,10 +1,10 @@
 // ============================================
 // Service Worker - SolicitaTransparencia
-// Versión dinámica para forzar actualización
+// Versión dinámica con activación inmediata
 // ============================================
 
 // Versión del cache - CAMBIA ESTE NÚMERO CADA VEZ QUE SUBAS CAMBIOS
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `solicita-transparencia-${CACHE_VERSION}`;
 
 const urlsToCache = [
@@ -20,7 +20,7 @@ const urlsToCache = [
   '/solicitatransparencia/data/tipos_informacion.json'
 ];
 
-// Instalación: cachear archivos
+// Instalación: cachear archivos y forzar activación
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -30,10 +30,11 @@ self.addEventListener('install', event => {
       })
       .catch(err => console.error('Error cacheando archivos:', err))
   );
+  // Forzar que el nuevo SW tome el control inmediatamente
   self.skipWaiting();
 });
 
-// Activación: eliminar caches viejos
+// Activación: eliminar caches viejos y tomar control
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -45,9 +46,11 @@ self.addEventListener('activate', event => {
           }
         })
       );
+    }).then(() => {
+      // Tomar control de todos los clientes abiertos
+      return self.clients.claim();
     })
   );
-  self.clients.claim();
 });
 
 // Estrategia: Network first con fallback a cache
