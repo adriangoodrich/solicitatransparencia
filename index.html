@@ -4,162 +4,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Solicita el resultado de tus reclamos municipales de forma simple y rápida">
-    <title>SolicitaTransparencia | Solicita el resultado de tu reclamo municipal</title>
-
-    <!-- CSS con versión para romper caché -->
-    <link rel="stylesheet" href="css/styles.css?v=5">
-
-    <!-- PWA Manifest -->
+    <title>SolicitaTransparencia</title>
+    <link rel="stylesheet" href="css/styles.css?v=6">
     <link rel="manifest" href="/solicitatransparencia/manifest.json">
     <meta name="theme-color" content="#0a4b6e">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SoliTrans">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
-    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 </head>
 
 <body>
     <header>
         <div class="container">
             <h1>SolicitaTransparencia</h1>
-            <p class="tagline">Solicita el resultado de tu reclamo municipal en 3 pasos simples</p>
+            <p class="tagline">Solicita el resultado de tu reclamo municipal</p>
         </div>
     </header>
 
     <main class="container">
         <!-- PASO 1: Ubicación -->
         <section class="paso">
-            <h2>Paso 1: ¿Dónde hiciste el reclamo?</h2>
-            <div class="form-group">
-                <label for="region">Región *</label>
-                <select id="region" required>
-                    <option value="">Cargando regiones...</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="comuna">Comuna *</label>
-                <select id="comuna" required disabled>
-                    <option value="">Primero selecciona una región</option>
-                </select>
-            </div>
-
-            <!-- Selector de correo (aparece al seleccionar comuna) -->
-            <div class="form-group" id="emailSelectorGroup" style="display: none;">
-                <label>📧 Correo de envío *</label>
-                <div id="emailOptions" class="radio-group">
-                    <!-- Se llena dinámicamente -->
+            <h2>1. Ubicación</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Región *</label>
+                    <select id="region">
+                        <option>Cargando...</option>
+                    </select>
                 </div>
-                <small>Selecciona a qué correo quieres enviar tu solicitud</small>
+                <div class="form-group">
+                    <label>Comuna *</label>
+                    <select id="comuna" disabled>
+                        <option>Primero selecciona región</option>
+                    </select>
+                </div>
             </div>
-
-            <small id="fecha-actualizacion" class="info-text"></small>
+            <div id="emailSelectorGroup" style="display:none;">
+                <label>📧 Correo de envío</label>
+                <div id="emailOptions" class="radio-group"></div>
+            </div>
+            <small id="fecha-actualizacion"></small>
         </section>
 
-        <!-- PASO 2: Datos del solicitante -->
+        <!-- PASO 2: Datos personales -->
         <section class="paso">
-            <h2>Paso 2: Tus datos</h2>
+            <h2>2. Tus datos</h2>
             <div class="form-group">
-                <label for="nombre">Nombre completo *</label>
-                <input type="text" id="nombre" required>
+                <label>Nombre completo *</label>
+                <input type="text" id="nombre">
             </div>
-            <div class="form-group">
-                <label for="correo">Correo electrónico *</label>
-                <input type="email" id="correo" required>
-                <small>La respuesta llegará a este correo</small>
-            </div>
-            <div class="form-group">
-                <label for="telefono">Teléfono (opcional)</label>
-                <div class="telefono-wrapper">
-                    <span class="codigo-pais">+56</span>
-                    <input type="tel" id="telefono" placeholder="9 1234 5678">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Correo electrónico *</label>
+                    <input type="email" id="correo">
                 </div>
-                <small>Solo para que la municipalidad te contacte si tiene dudas</small>
+                <div class="form-group">
+                    <label>Teléfono (opcional)</label>
+                    <div class="telefono-wrapper">
+                        <span class="codigo-pais">+56</span>
+                        <input type="tel" id="telefono" placeholder="9 1234 5678">
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- PASO 3: ¿Qué reclamo quieres consultar? -->
+        <!-- PASO 3: Identificación del reclamo -->
         <section class="paso">
-            <h2>Paso 3: ¿Qué reclamo quieres consultar?</h2>
-
-            <div class="form-group">
-                <label for="numeroReclamo">Número de reclamo</label>
-                <input type="text" id="numeroReclamo" placeholder="Ej: RM-1234-2026">
-                <small>El número que te dieron cuando hiciste el reclamo</small>
-            </div>
-            <div class="form-group">
-                <label for="direccion">Dirección del hecho</label>
-                <input type="text" id="direccion" placeholder="Ej: Av. Providencia 123">
-                <small>La dirección donde ocurrió el problema que denunciaste</small>
+            <h2>3. Identifica tu reclamo</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Número de reclamo</label>
+                    <input type="text" id="numeroReclamo" placeholder="Ej: RM-1234-2026">
+                </div>
+                <div class="form-group">
+                    <label>Dirección del hecho</label>
+                    <input type="text" id="direccion" placeholder="Ej: Av. Providencia 123">
+                </div>
             </div>
             <div class="aviso-validacion">
-                <small>⚠️ Debes ingresar al menos el número de reclamo o la dirección</small>
+                <small>⚠️ Debes ingresar al menos número de reclamo o dirección</small>
             </div>
 
             <div class="form-group">
                 <label>Fecha del reclamo *</label>
                 <div class="fecha-wrapper">
                     <select id="dia">
-                        <option value="">Día</option>
+                        <option>Día</option>
                     </select>
-                    <select id="mes" required>
-                        <option value="">Mes</option>
+                    <select id="mes">
+                        <option>Mes</option>
                     </select>
-                    <select id="anio" required>
-                        <option value="">Año</option>
+                    <select id="anio">
+                        <option>Año</option>
                     </select>
                 </div>
-                <small>💡 Si no recuerdas el día exacto, deja el día en blanco</small>
+                <small>💡 Si no recuerdas el día, déjalo en blanco</small>
             </div>
 
             <div class="form-group">
-                <label for="tipoInfo">Tipo de información que solicitas *</label>
-                <select id="tipoInfo" required>
-                    <option value="">Cargando tipos...</option>
+                <label>Tipo de información *</label>
+                <select id="tipoInfo">
+                    <option>Cargando...</option>
                 </select>
             </div>
-            <div id="campoOtro" class="form-group hidden">
-                <label for="otroTexto">Especifica tu solicitud *</label>
-                <textarea id="otroTexto" rows="3"
-                    placeholder="Describe claramente la información que necesitas..."></textarea>
+            <div id="campoOtro" class="hidden">
+                <textarea id="otroTexto" rows="2" placeholder="Describe tu solicitud..."></textarea>
             </div>
         </section>
 
-        <!-- VISTA PREVIA Y ENVÍO -->
+        <!-- Vista previa -->
         <section class="paso">
-            <h2>Vista previa de tu solicitud</h2>
+            <h2>Vista previa</h2>
             <div class="preview-box">
-                <div id="vistaPrevia" class="vista-previa">
-                    Completa los campos para generar tu solicitud.
-                </div>
+                <div id="vistaPrevia" class="vista-previa">Completa los campos</div>
             </div>
             <div class="acciones">
-                <button id="btnEditar" class="btn-secundario" type="button">✏️ Editar texto</button>
-                <button id="btnEnviar" class="btn-principal" type="button">📧 Abrir mi correo para enviar</button>
+                <button id="btnEditar" class="btn-secundario">✏️ Editar</button>
+                <button id="btnEnviar" class="btn-principal">📧 Abrir correo</button>
             </div>
-            <p class="info-legal">
-                Al hacer clic se abrirá tu programa de correo con el mensaje ya redactado.<br>
-                Solo debes revisar y hacer clic en "Enviar".
-            </p>
         </section>
     </main>
 
-    <!-- Aviso para reportar problemas -->
     <div class="report-banner">
         <div class="container">
             <div class="report-content">
-                <span class="report-icon">📢</span>
+                <span>📢</span>
                 <div class="report-text">
-                    <strong>¿No encuentras tu municipalidad o el correo no funciona?</strong>
-                    <span>Envíanos un correo a </span>
+                    <strong>¿Problemas con tu municipalidad?</strong>
                     <a
-                        href="mailto:adriangoodrich2000@gmail.com?subject=Correo/Municipalidad%20no%20encontrado&body=Municipalidad%3A%20%0D%0AProblema%3A%20%0D%0AObservaciones%3A%20">
-                        adriangoodrich2000@gmail.com
-                    </a>
-                    <span> indicando la municipalidad y el problema, y lo solucionaremos.</span>
+                        href="mailto:adriangoodrich2000@gmail.com?subject=Correo/Municipalidad%20no%20encontrado">Escríbenos</a>
                 </div>
             </div>
         </div>
@@ -167,129 +137,21 @@
 
     <footer>
         <div class="container">
-            <p>Esta herramienta no es oficial. Facilita el proceso de solicitud bajo la Ley N° 20.285.</p>
-            <p>Plazo de respuesta: <strong>20 días hábiles</strong> (artículo 14 de la Ley de Transparencia)</p>
-            <p>
-                <a href="https://github.com/adriangoodrich/solicitatransparencia" target="_blank">Ver código fuente</a>
-                |
-                <a href="https://github.com/adriangoodrich/solicitatransparencia/blob/main/docs/contribuir.md"
-                    target="_blank">Cómo contribuir</a>
-            </p>
+            <p>Herramienta ciudadana - Ley 20.285</p>
+            <p>Plazo: <strong>20 días hábiles</strong></p>
+            <p><a href="https://github.com/adriangoodrich/solicitatransparencia">GitHub</a></p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script src="js/uiHelpers.js"></script>
     <script src="js/validaciones.js"></script>
     <script src="js/mailGenerator.js"></script>
     <script src="js/app.js"></script>
 
-    <!-- Aviso para Firefox (no soporta instalación PWA en Windows) -->
     <script>
-        (function () {
-            const isFirefoxOnWindows = navigator.userAgent.includes('Firefox') &&
-                !navigator.userAgent.includes('Android') &&
-                navigator.platform?.includes('Win');
-
-            if (isFirefoxOnWindows) {
-                if (document.getElementById('firefox-warning')) return;
-
-                const warningDiv = document.createElement('div');
-                warningDiv.id = 'firefox-warning';
-                warningDiv.innerHTML = `
-                    <div class="firefox-warning">
-                        <div class="warning-icon">💡</div>
-                        <div class="warning-content">
-                            <strong>Consejo para Firefox:</strong> Puedes usar esta página normalmente, pero si quieres <strong>instalarla como app</strong> en tu computadora, te recomendamos usar <strong>Chrome</strong> o <strong>Edge</strong>.
-                        </div>
-                        <button class="warning-close" aria-label="Cerrar">✖</button>
-                    </div>
-                `;
-
-                const main = document.querySelector('main');
-                if (main) {
-                    main.insertBefore(warningDiv, main.firstChild);
-                }
-
-                const closeBtn = warningDiv.querySelector('.warning-close');
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        warningDiv.remove();
-                    });
-                }
-            }
-        })();
-    </script>
-
-    <!-- Service Worker Registration -->
-    <script>
-        let refreshing = false;
-
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (refreshing) return;
-            refreshing = true;
-            window.location.reload();
-        });
-
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/solicitatransparencia/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registrado:', registration);
-
-                    if (registration.waiting) {
-                        console.log('Hay un SW esperando');
-                        mostrarNotificacionActualizacion(registration);
-                    }
-
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        console.log('Nueva versión detectada');
-
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Nueva versión instalada, mostrando notificación');
-                                mostrarNotificacionActualizacion(registration);
-                            }
-                        });
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al registrar Service Worker:', error);
-                });
-
-            setInterval(() => {
-                navigator.serviceWorker.getRegistration().then(reg => {
-                    if (reg) reg.update();
-                });
-            }, 60 * 60 * 1000);
-        }
-
-        function mostrarNotificacionActualizacion(registration) {
-            if (document.getElementById('update-notification')) return;
-
-            const notificacion = document.createElement('div');
-            notificacion.id = 'update-notification';
-            notificacion.innerHTML = `
-                <div class="update-banner">
-                    <span>🔄 Nueva versión disponible</span>
-                    <button id="update-btn" class="update-btn">Actualizar ahora</button>
-                    <button id="close-btn" class="close-btn">✖</button>
-                </div>
-            `;
-            document.body.appendChild(notificacion);
-
-            document.getElementById('update-btn').addEventListener('click', () => {
-                if (registration && registration.waiting) {
-                    registration.waiting.postMessage('skipWaiting');
-                }
-                setTimeout(() => {
-                    window.location.reload();
-                }, 100);
-            });
-
-            document.getElementById('close-btn').addEventListener('click', () => {
-                notificacion.remove();
-            });
+                .catch(e => console.log('SW error:', e));
         }
     </script>
 </body>
