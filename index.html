@@ -35,6 +35,16 @@
                     <option value="">Primero selecciona una región</option>
                 </select>
             </div>
+
+            <!-- Selector de correo (aparece al seleccionar comuna) -->
+            <div class="form-group" id="emailSelectorGroup" style="display: none;">
+                <label>📧 Correo de envío *</label>
+                <div id="emailOptions" class="radio-group">
+                    <!-- Se llena dinámicamente -->
+                </div>
+                <small>Selecciona a qué correo quieres enviar tu solicitud</small>
+            </div>
+
             <small id="fecha-actualizacion" class="info-text"></small>
         </section>
 
@@ -112,7 +122,7 @@
             <h2>Vista previa de tu solicitud</h2>
             <div class="preview-box">
                 <div id="vistaPrevia" class="vista-previa">
-                    <!-- Aquí se mostrará el texto generado -->
+                    Completa los campos para generar tu solicitud.
                 </div>
             </div>
             <div class="acciones">
@@ -137,10 +147,10 @@
         </div>
     </footer>
 
-    <script src="js/app.js"></script>
+    <script src="js/uiHelpers.js"></script>
     <script src="js/validaciones.js"></script>
     <script src="js/mailGenerator.js"></script>
-    <script src="js/uiHelpers.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

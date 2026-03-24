@@ -2,23 +2,12 @@
 // mailGenerator.js - Generación del texto del correo
 // ============================================
 
-/**
- * Obtiene el nombre del mes en español
- * @param {number} mesNumero - Número del mes (1-12)
- * @returns {string}
- */
 function obtenerNombreMes(mesNumero) {
-    const meses = [
-        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-    ];
+    const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     return meses[mesNumero - 1];
 }
 
-/**
- * Genera la descripción de la fecha según los datos ingresados
- * @returns {string}
- */
 function generarDescripcionFecha() {
     const dia = document.getElementById('dia')?.value;
     const mes = document.getElementById('mes')?.value;
@@ -35,10 +24,6 @@ function generarDescripcionFecha() {
     }
 }
 
-/**
- * Genera la descripción del reclamo (número o dirección)
- * @returns {string}
- */
 function generarDescripcionReclamo() {
     const numeroReclamo = document.getElementById('numeroReclamo')?.value.trim();
     const direccion = document.getElementById('direccion')?.value.trim();
@@ -53,11 +38,6 @@ function generarDescripcionReclamo() {
     return '';
 }
 
-/**
- * Genera el tipo de información solicitada
- * @param {Array} tipos - Lista de tipos desde el JSON
- * @returns {string}
- */
 function generarTipoInformacion(tipos) {
     const tipoSelect = document.getElementById('tipoInfo');
     const tipoId = tipoSelect?.value;
@@ -75,33 +55,29 @@ function generarTipoInformacion(tipos) {
     return tipo.nombre;
 }
 
-/**
- * Obtiene los datos del solicitante
- * @returns {Object}
- */
 function obtenerDatosSolicitante() {
     const nombre = document.getElementById('nombre')?.value.trim() || '';
     const correo = document.getElementById('correo')?.value.trim() || '';
     const telefono = document.getElementById('telefono')?.value.trim() || '';
-
     return { nombre, correo, telefono };
 }
 
-/**
- * Obtiene el nombre de la comuna seleccionada
- * @returns {string}
- */
 function obtenerNombreComuna() {
     const comunaSelect = document.getElementById('comuna');
     const opcionSeleccionada = comunaSelect?.options[comunaSelect.selectedIndex];
     return opcionSeleccionada?.text || '';
 }
 
-/**
- * Genera el texto completo del correo
- * @param {Array} tipos - Lista de tipos desde el JSON
- * @returns {string}
- */
+function obtenerEmailSeleccionado() {
+    const radioSeleccionado = document.querySelector('input[name="emailSeleccionado"]:checked');
+    if (radioSeleccionado) {
+        return radioSeleccionado.value;
+    }
+    const comunaSelect = document.getElementById('comuna');
+    const selectedOption = comunaSelect.options[comunaSelect.selectedIndex];
+    return selectedOption?.getAttribute('data-email') || null;
+}
+
 function generarTextoCorreo(tipos) {
     const comuna = obtenerNombreComuna();
     const { nombre, correo, telefono } = obtenerDatosSolicitante();
@@ -130,13 +106,8 @@ Saludos cordiales,
 - **Correo electrónico:** ${correo}${telefonoTexto}`;
 }
 
-/**
- * Abre el cliente de correo con la solicitud generada
- * @param {Array} tipos - Lista de tipos desde el JSON
- */
 function abrirCorreo(tipos) {
-    const comunaSelect = document.getElementById('comuna');
-    const emailDestino = comunaSelect?.options[comunaSelect.selectedIndex]?.getAttribute('data-email');
+    const emailDestino = obtenerEmailSeleccionado();
     const { nombre, correo } = obtenerDatosSolicitante();
     const textoCorreo = generarTextoCorreo(tipos);
 
@@ -151,7 +122,5 @@ function abrirCorreo(tipos) {
     }
 
     const asunto = `Solicitud de acceso a información pública - ${nombre}`;
-
-    // Abrir cliente de correo
     window.location.href = `mailto:${emailDestino}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(textoCorreo)}`;
 }
