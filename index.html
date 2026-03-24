@@ -187,13 +187,11 @@
     <!-- Aviso para Firefox (no soporta instalación PWA en Windows) -->
     <script>
         (function () {
-            // Detectar Firefox en Windows (no Android)
             const isFirefoxOnWindows = navigator.userAgent.includes('Firefox') &&
                 !navigator.userAgent.includes('Android') &&
                 navigator.platform?.includes('Win');
 
             if (isFirefoxOnWindows) {
-                // Evitar duplicados
                 if (document.getElementById('firefox-warning')) return;
 
                 const warningDiv = document.createElement('div');
@@ -208,13 +206,11 @@
                     </div>
                 `;
 
-                // Insertar al inicio del main
                 const main = document.querySelector('main');
                 if (main) {
                     main.insertBefore(warningDiv, main.firstChild);
                 }
 
-                // Botón cerrar
                 const closeBtn = warningDiv.querySelector('.warning-close');
                 if (closeBtn) {
                     closeBtn.addEventListener('click', () => {
@@ -228,16 +224,14 @@
     <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/solicitatransparencia/sw.js')
+            navigator.serviceWorker.register('/solicitatransparencia/sw.js?v=' + Date.now())
                 .then(registration => {
                     console.log('Service Worker registrado con éxito:', registration);
 
-                    // Detectar nueva versión y notificar al usuario
                     registration.addEventListener('updatefound', () => {
                         const newWorker = registration.installing;
                         newWorker.addEventListener('statechange', () => {
                             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // Nueva versión disponible
                                 mostrarNotificacionActualizacion();
                             }
                         });
@@ -249,7 +243,6 @@
         }
 
         function mostrarNotificacionActualizacion() {
-            // Evitar duplicados
             if (document.getElementById('update-notification')) return;
 
             const notificacion = document.createElement('div');

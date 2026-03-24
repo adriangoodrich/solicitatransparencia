@@ -5,7 +5,6 @@
 
 /* ----- RESET Y VARIABLES ----- */
 :root {
-    /* Paleta de colores */
     --color-primary: #0a4b6e;
     --color-primary-dark: #063b57;
     --color-primary-light: #2c6e8f;
@@ -19,24 +18,20 @@
     --color-gray-dark: #343a40;
     --color-white: #ffffff;
 
-    /* Espaciado */
     --spacing-xs: 0.25rem;
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 1.5rem;
     --spacing-xl: 2rem;
 
-    /* Bordes */
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --border-radius-lg: 12px;
 
-    /* Sombras */
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
 
-    /* Tipografía */
     --font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
@@ -54,14 +49,12 @@ body {
     min-height: 100vh;
 }
 
-/* ----- CONTAINER ----- */
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
 }
 
-/* ----- HEADER ----- */
 header {
     background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     color: var(--color-white);
@@ -84,7 +77,6 @@ header h1 {
     font-weight: 400;
 }
 
-/* ----- PASOS (SECCIONES) ----- */
 .paso {
     background: var(--color-white);
     border-radius: var(--border-radius-lg);
@@ -107,7 +99,6 @@ header h1 {
     display: inline-block;
 }
 
-/* ----- FORMULARIOS ----- */
 .form-group {
     margin-bottom: var(--spacing-lg);
 }
@@ -153,7 +144,6 @@ small,
     margin-top: var(--spacing-xs);
 }
 
-/* ----- TELÉFONO ----- */
 .telefono-wrapper {
     display: flex;
     align-items: center;
@@ -173,14 +163,12 @@ small,
     flex: 1;
 }
 
-/* ----- FECHA WRAPPER ----- */
 .fecha-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--spacing-md);
 }
 
-/* ----- AVISO VALIDACIÓN ----- */
 .aviso-validacion {
     background: #fff3e0;
     padding: var(--spacing-sm) var(--spacing-md);
@@ -194,20 +182,12 @@ small,
     margin: 0;
 }
 
-/* ----- VISTA PREVIA ----- */
 .preview-box {
     background: var(--color-gray-light);
     border-radius: var(--border-radius-md);
     padding: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     border: 1px solid #e0e0e0;
-}
-
-.preview-box h3 {
-    color: var(--color-primary);
-    margin-bottom: var(--spacing-md);
-    font-size: 1rem;
-    font-weight: 600;
 }
 
 .vista-previa {
@@ -223,7 +203,6 @@ small,
     overflow-y: auto;
 }
 
-/* ----- BOTONES ----- */
 .acciones {
     display: flex;
     gap: var(--spacing-md);
@@ -265,7 +244,6 @@ small,
     transform: translateY(-2px);
 }
 
-/* ----- FOOTER ----- */
 footer {
     background: var(--color-gray-dark);
     color: var(--color-white);
@@ -288,12 +266,10 @@ footer p {
     font-size: 0.9rem;
 }
 
-/* ----- UTILIDADES ----- */
 .hidden {
     display: none;
 }
 
-/* ----- ANIMACIONES ----- */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -310,40 +286,12 @@ footer p {
     animation: fadeIn 0.5s ease-out;
 }
 
-/* ----- ESTADO DE CARGA ----- */
 .loading {
     opacity: 0.6;
     pointer-events: none;
 }
 
-/* ----- TOOLTIP (para la ampolleta) ----- */
-.tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-.tooltip .tooltip-text {
-    visibility: hidden;
-    background-color: var(--color-gray-dark);
-    color: var(--color-white);
-    text-align: center;
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-sm) var(--spacing-md);
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
-    font-size: 0.8rem;
-}
-
-.tooltip:hover .tooltip-text {
-    visibility: visible;
-}
-
-/* ----- RADIO BUTTONS PERSONALIZADOS ----- */
+/* Radio buttons */
 .radio-group {
     display: flex;
     flex-direction: column;
@@ -411,7 +359,7 @@ footer p {
     color: #856404;
 }
 
-/* ----- AVISO PARA FIREFOX ----- */
+/* Firefox warning */
 .firefox-warning {
     background: #fff3cd;
     border-left: 4px solid #ffc107;
@@ -448,11 +396,7 @@ footer p {
     line-height: 1;
 }
 
-.warning-close:hover {
-    opacity: 0.7;
-}
-
-/* ----- BANNER DE ACTUALIZACIÓN PWA ----- */
+/* Update banner */
 #update-notification {
     position: fixed;
     bottom: 20px;
@@ -487,11 +431,6 @@ footer p {
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s;
-}
-
-.update-btn:hover {
-    transform: scale(1.02);
 }
 
 .close-btn {
@@ -515,7 +454,7 @@ footer p {
     }
 }
 
-/* ----- BANNER DE REPORTE DE PROBLEMAS ----- */
+/* Report banner */
 .report-banner {
     background: #e8f4fd;
     border-top: 1px solid #cde5f5;
@@ -562,8 +501,6 @@ footer p {
    ============================================ */
 
 @media (max-width: 768px) {
-
-    /* Aumentar fuente base para mejor legibilidad */
     body {
         font-size: 16px;
     }
@@ -572,7 +509,6 @@ footer p {
         padding: 0 12px;
     }
 
-    /* Header más compacto */
     header {
         padding: 1.5rem 0;
         margin-bottom: 1rem;
@@ -587,7 +523,6 @@ footer p {
         padding: 0 1rem;
     }
 
-    /* Tarjetas más ajustadas */
     .paso {
         padding: 1.25rem;
         margin-bottom: 1rem;
@@ -599,7 +534,6 @@ footer p {
         margin-bottom: 1rem;
     }
 
-    /* Campos de formulario más cómodos */
     input,
     select,
     textarea {
@@ -618,7 +552,6 @@ footer p {
         font-size: 0.75rem;
     }
 
-    /* Teléfono: mantener en línea en móvil */
     .telefono-wrapper {
         flex-direction: row;
         align-items: center;
@@ -629,7 +562,6 @@ footer p {
         font-size: 16px;
     }
 
-    /* Fecha: cada campo en su propia línea */
     .fecha-wrapper {
         display: flex;
         flex-direction: column;
@@ -640,7 +572,6 @@ footer p {
         width: 100%;
     }
 
-    /* Vista previa más legible */
     .preview-box {
         padding: 1rem;
     }
@@ -651,7 +582,6 @@ footer p {
         max-height: 350px;
     }
 
-    /* Botones más compactos y centrados */
     .acciones {
         flex-direction: column;
         gap: 0.75rem;
@@ -664,7 +594,6 @@ footer p {
         font-size: 1rem;
     }
 
-    /* Selector de correo (radio buttons) más compacto */
     .radio-group {
         gap: 0.75rem;
     }
@@ -679,7 +608,6 @@ footer p {
         word-break: break-all;
     }
 
-    /* Banner de reporte */
     .report-content {
         flex-direction: column;
         text-align: center;
@@ -692,7 +620,6 @@ footer p {
         line-height: 1.4;
     }
 
-    /* Footer más compacto */
     footer {
         padding: 1.5rem 0;
         margin-top: 1rem;
@@ -703,7 +630,6 @@ footer p {
         margin-bottom: 0.5rem;
     }
 
-    /* Aviso Firefox */
     .firefox-warning {
         flex-wrap: wrap;
         padding: 10px 12px;
@@ -714,7 +640,6 @@ footer p {
         font-size: 1.2rem;
     }
 
-    /* Banner de actualización PWA */
     .update-banner {
         flex-direction: column;
         text-align: center;
@@ -731,7 +656,6 @@ footer p {
     }
 }
 
-/* Móviles pequeños (menos de 480px) */
 @media (max-width: 480px) {
     .container {
         padding: 0 10px;
