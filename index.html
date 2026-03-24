@@ -3,11 +3,24 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Solicita el resultado de tus reclamos municipales de forma simple y rápida">
     <title>SolicitaTransparencia</title>
+
+    <!-- CSS con versión forzada -->
     <link rel="stylesheet" href="css/styles.css?v=6">
+
+    <!-- PWA Manifest -->
     <link rel="manifest" href="/solicitatransparencia/manifest.json">
     <meta name="theme-color" content="#0a4b6e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SoliTrans">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
 </head>
 
 <body>
@@ -25,22 +38,22 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Región *</label>
-                    <select id="region">
-                        <option>Cargando...</option>
+                    <select id="region" required>
+                        <option value="">Cargando...</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Comuna *</label>
-                    <select id="comuna" disabled>
-                        <option>Primero selecciona región</option>
+                    <select id="comuna" required disabled>
+                        <option value="">Primero selecciona región</option>
                     </select>
                 </div>
             </div>
-            <div id="emailSelectorGroup" style="display:none;">
+            <div id="emailSelectorGroup" style="display: none;">
                 <label>📧 Correo de envío</label>
                 <div id="emailOptions" class="radio-group"></div>
             </div>
-            <small id="fecha-actualizacion"></small>
+            <small id="fecha-actualizacion" class="info-text"></small>
         </section>
 
         <!-- PASO 2: Datos personales -->
@@ -48,12 +61,12 @@
             <h2>2. Tus datos</h2>
             <div class="form-group">
                 <label>Nombre completo *</label>
-                <input type="text" id="nombre">
+                <input type="text" id="nombre" required>
             </div>
             <div class="form-row">
                 <div class="form-group">
                     <label>Correo electrónico *</label>
-                    <input type="email" id="correo">
+                    <input type="email" id="correo" required>
                 </div>
                 <div class="form-group">
                     <label>Teléfono (opcional)</label>
@@ -86,13 +99,13 @@
                 <label>Fecha del reclamo *</label>
                 <div class="fecha-wrapper">
                     <select id="dia">
-                        <option>Día</option>
+                        <option value="">Día</option>
                     </select>
-                    <select id="mes">
-                        <option>Mes</option>
+                    <select id="mes" required>
+                        <option value="">Mes</option>
                     </select>
-                    <select id="anio">
-                        <option>Año</option>
+                    <select id="anio" required>
+                        <option value="">Año</option>
                     </select>
                 </div>
                 <small>💡 Si no recuerdas el día, déjalo en blanco</small>
@@ -100,8 +113,8 @@
 
             <div class="form-group">
                 <label>Tipo de información *</label>
-                <select id="tipoInfo">
-                    <option>Cargando...</option>
+                <select id="tipoInfo" required>
+                    <option value="">Cargando...</option>
                 </select>
             </div>
             <div id="campoOtro" class="hidden">
@@ -113,7 +126,7 @@
         <section class="paso">
             <h2>Vista previa</h2>
             <div class="preview-box">
-                <div id="vistaPrevia" class="vista-previa">Completa los campos</div>
+                <div id="vistaPrevia" class="vista-previa">Completa los campos obligatorios</div>
             </div>
             <div class="acciones">
                 <button id="btnEditar" class="btn-secundario">✏️ Editar</button>
@@ -122,10 +135,11 @@
         </section>
     </main>
 
+    <!-- Banner reporte -->
     <div class="report-banner">
         <div class="container">
             <div class="report-content">
-                <span>📢</span>
+                <span class="report-icon">📢</span>
                 <div class="report-text">
                     <strong>¿Problemas con tu municipalidad?</strong>
                     <a
@@ -143,15 +157,18 @@
         </div>
     </footer>
 
+    <!-- JavaScripts -->
     <script src="js/uiHelpers.js"></script>
     <script src="js/validaciones.js"></script>
     <script src="js/mailGenerator.js"></script>
     <script src="js/app.js"></script>
 
+    <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/solicitatransparencia/sw.js')
-                .catch(e => console.log('SW error:', e));
+                .then(reg => console.log('SW registrado'))
+                .catch(err => console.log('SW error:', err));
         }
     </script>
 </body>
