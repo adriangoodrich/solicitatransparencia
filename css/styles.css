@@ -1,6 +1,6 @@
 /* ============================================
-   SolicitaTransparencia - v8
-   Fix zoom-out Android: overflow-x hidden y control de desbordamiento
+   SolicitaTransparencia - v8 (final)
+   Fix zoom-out Android + refuerzo de desbordamiento
    ============================================ */
 
 :root {
@@ -39,6 +39,7 @@ body {
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
+    max-width: 100%;
 }
 
 html {
@@ -167,6 +168,7 @@ small,
     color: var(--color-gray);
     margin-top: 4px;
     display: block;
+    word-break: break-word;
 }
 
 /* Teléfono */
@@ -216,6 +218,7 @@ small,
 .aviso-validacion small {
     color: #856404;
     margin: 0;
+    word-break: break-word;
 }
 
 /* Vista previa - FIX 3: evitar desbordamiento de texto largo */
