@@ -2,18 +2,18 @@ const CACHE_VERSION = '1.1';
 const CACHE_NAME = `solicita-transparencia-${CACHE_VERSION}`;
 
 const urlsToCache = [
-  '/solicitatransparencia/',
-  '/solicitatransparencia/index.html',
-  '/solicitatransparencia/404.html',
-  '/solicitatransparencia/css/styles.css?v=10',
-  '/solicitatransparencia/js/app.js',
-  '/solicitatransparencia/js/validaciones.js',
-  '/solicitatransparencia/js/mailGenerator.js',
-  '/solicitatransparencia/js/uiHelpers.js',
-  '/solicitatransparencia/data/municipios.json',
-  '/solicitatransparencia/data/tipos_informacion.json'
+  '/',
+  '/index.html',
+  '/404.html',
+  '/css/styles.css?v=10',
+  '/js/app.js',
+  '/js/validaciones.js',
+  '/js/mailGenerator.js',
+  '/js/uiHelpers.js',
+  '/data/municipios.json',
+  '/data/tipos_informacion.json'
   ,
-  '/solicitatransparencia/version.json'
+  '/version.json'
 ];
 
 self.addEventListener('install', event => {
