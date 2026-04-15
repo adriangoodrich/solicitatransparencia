@@ -89,21 +89,22 @@ function generarTextoCorreo(tipos) {
         return '⚠️ Completa todos los campos obligatorios para generar la solicitud.';
     }
 
-    const telefonoTexto = telefono ? `\n- **Teléfono:** +56 ${telefono}` : '';
+    const telefonoTexto = telefono ? `\nTeléfono: +56 ${telefono}` : '';
 
+    // Versión sin asteriscos, para correo en texto plano
     return `Estimado/a Encargado/a de Transparencia de la Municipalidad de ${comuna}:
 
 Por medio del presente, y al amparo de la Ley N° 20.285 sobre Acceso a la Información Pública, vengo en solicitar lo siguiente:
 
-**${tipoInfo}** asociado al ${reclamoTexto}, ingresado ${fechaTexto}.
+${tipoInfo} asociado al ${reclamoTexto}, ingresado ${fechaTexto}.
 
-Agradezco de antemano su atención y quedo atento a su respuesta dentro del plazo legal establecido de **20 días hábiles**, contados desde la recepción de esta solicitud, conforme al artículo 14 de la Ley N° 20.285.
+Agradezco de antemano su atención y quedo atento a su respuesta dentro del plazo legal establecido de 20 días hábiles, contados desde la recepción de esta solicitud, conforme al artículo 14 de la Ley N° 20.285.
 
 Saludos cordiales,
 
-**DATOS DEL SOLICITANTE:**
-- **Nombre:** ${nombre}
-- **Correo electrónico:** ${correo}${telefonoTexto}`;
+DATOS DEL SOLICITANTE:
+Nombre: ${nombre}
+Correo electrónico: ${correo}${telefonoTexto}`;
 }
 
 function abrirCorreo(tipos) {

@@ -5,6 +5,7 @@
 // Variables globales
 let municipiosData = null;
 let tiposData = null;
+const APP_VERSION = '1.1';
 
 /**
  * Carga los datos desde los archivos JSON
@@ -78,6 +79,70 @@ function inicializarPagina() {
 
     configurarEventos();
     actualizarVistaPrevia();
+    // Comprobar si hay nueva versión disponible en el servidor
+    checkVersion();
+}
+
+/**
+ * Comprueba la versión remota y muestra banner si hay una versión nueva
+ */
+async function checkVersion() {
+    try {
+        const resp = await fetch('version.json', { cache: 'no-store' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const remoteVersion = data?.version;
+        if (remoteVersion && remoteVersion !== APP_VERSION) {
+            showUpdateBanner(remoteVersion);
+        }
+    } catch (err) {
+        console.warn('No se pudo comprobar versión remota:', err);
+    }
+}
+
+function showUpdateBanner(remoteVersion) {
+    let container = document.getElementById('update-notification');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'update-notification';
+        document.body.appendChild(container);
+    }
+
+    container.innerHTML = `
+        <div class="update-banner">
+            Nueva versión disponible — <strong>${remoteVersion}</strong>
+            <button id="btnActualizarVersion" class="btn-principal" style="margin-left:12px;">Actualizar</button>
+            <button id="btnCerrarVersion" class="btn-secundario" style="margin-left:8px;">Cerrar</button>
+        </div>
+    `;
+
+    const btnActualizar = document.getElementById('btnActualizarVersion');
+    const btnCerrar = document.getElementById('btnCerrarVersion');
+
+    if (btnActualizar) {
+        btnActualizar.addEventListener('click', async () => {
+            // Intentar avisar al service worker para que haga skipWaiting
+            try {
+                const reg = await navigator.serviceWorker.getRegistration();
+                if (reg && reg.waiting) {
+                    reg.waiting.postMessage('skipWaiting');
+                } else if (navigator.serviceWorker.controller) {
+                    navigator.serviceWorker.controller.postMessage('skipWaiting');
+                } else {
+                    // Fallback: recargar la página
+                    window.location.reload();
+                }
+            } catch (e) {
+                window.location.reload();
+            }
+        });
+    }
+
+    if (btnCerrar) {
+        btnCerrar.addEventListener('click', () => {
+            container.remove();
+        });
+    }
 }
 
 function cargarRegiones() {

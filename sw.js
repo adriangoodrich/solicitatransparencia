@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v10';
+const CACHE_VERSION = '1.1';
 const CACHE_NAME = `solicita-transparencia-${CACHE_VERSION}`;
 
 const urlsToCache = [
@@ -12,6 +12,8 @@ const urlsToCache = [
   '/solicitatransparencia/js/uiHelpers.js',
   '/solicitatransparencia/data/municipios.json',
   '/solicitatransparencia/data/tipos_informacion.json'
+  ,
+  '/solicitatransparencia/version.json'
 ];
 
 self.addEventListener('install', event => {
