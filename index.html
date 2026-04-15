@@ -237,72 +237,62 @@
         })();
     </script>
 
-     <!-- NOTIFICACIÓN DE NUEVA VERSIÓN PARA PWA -->
-  <div id="pwa-update-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2d3748; color: white; padding: 16px; border-radius: 12px; text-align: center; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: system-ui, sans-serif;">
-    <p style="margin: 0 0 12px 0; font-size: 16px;">🔄 Nueva versión disponible (v<span id="new-version-display"></span>)</p>
-    <button id="update-pwa-btn" style="background: #48bb78; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">Actualizar ahora</button>
+  <!-- NOTIFICACIÓN DE NUEVA VERSIÓN -->
+  <div id="pwa-update-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2d3748; color: white; padding: 16px; border-radius: 12px; text-align: center; z-index: 9999; font-family: system-ui, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <p style="margin: 0 0 12px 0;">🔄 Nueva versión disponible</p>
+    <button id="update-pwa-btn" style="background: #48bb78; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">Actualizar ahora</button>
   </div>
 
   <script>
-    if ('serviceWorker' in navigator) {
-      let refreshing = false;
+    (function() {
+      if (!('serviceWorker' in navigator)) return;
+      
+      let updateNeeded = false;
       let newWorker = null;
-
-      // Cuando el Service Worker cambia, recargar la página
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (refreshing) return;
-        refreshing = true;
+      
+      // Detectar bucle de recargas
+      let reloadCount = localStorage.getItem('sw-reload-count') || 0;
+      if (reloadCount > 3) {
+        // Bucle detectado - limpiar todo
+        localStorage.clear();
+        caches.keys().then(keys => keys.forEach(key => caches.delete(key)));
         window.location.reload();
-      });
-
-      navigator.serviceWorker.register('/sw.js').then(registration => {
-        console.log('Service Worker registrado:', registration);
+      }
+      
+      navigator.serviceWorker.register('/sw.js').then(reg => {
+        console.log('SW registrado');
         
-        // Verificar actualizaciones cada hora
-        setInterval(() => {
-          registration.update();
-        }, 60 * 60 * 1000);
+        // Verificar actualizaciones cada 30 minutos
+        setInterval(() => reg.update(), 30 * 60 * 1000);
         
-        // Detectar nueva versión
-        registration.addEventListener('updatefound', () => {
-          newWorker = registration.installing;
-          console.log('Nuevo Service Worker detectado');
+        reg.addEventListener('updatefound', () => {
+          newWorker = reg.installing;
           
           newWorker.addEventListener('statechange', () => {
-            console.log('Estado del nuevo worker:', newWorker.state);
-            
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Mostrar notificación al usuario
-              const notification = document.getElementById('pwa-update-notification');
-              if (notification) {
-                // Mostrar número de versión si está disponible
-                fetch('/sw.js').then(res => res.text()).then(text => {
-                  const versionMatch = text.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
-                  if (versionMatch) {
-                    document.getElementById('new-version-display').textContent = versionMatch[1];
-                  }
-                });
-                notification.style.display = 'block';
-              }
+              // Hay nueva versión
+              document.getElementById('pwa-update-notification').style.display = 'block';
             }
           });
         });
-      }).catch(err => {
-        console.error('Error al registrar SW:', err);
       });
       
-      // Botón para actualizar
-      document.getElementById('update-pwa-btn')?.addEventListener('click', () => {
+      // Botón de actualizar
+      document.getElementById('update-pwa-btn').addEventListener('click', () => {
         if (newWorker) {
+          // Contar recarga para detectar bucles
+          let count = parseInt(localStorage.getItem('sw-reload-count') || '0');
+          localStorage.setItem('sw-reload-count', count + 1);
+          
           newWorker.postMessage({ action: 'skipWaiting' });
-          const notification = document.getElementById('pwa-update-notification');
-          if (notification) notification.style.display = 'none';
-        } else {
-          // Fallback: recargar la página
-          window.location.reload();
+          setTimeout(() => window.location.reload(), 100);
         }
+        document.getElementById('pwa-update-notification').style.display = 'none';
       });
-    }
+      
+      // Resetear contador cuando todo funciona
+      setTimeout(() => localStorage.removeItem('sw-reload-count'), 5000);
+    })();
   </script>
 </body>
 
