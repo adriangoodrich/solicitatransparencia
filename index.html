@@ -25,7 +25,12 @@
 <body>
     <header>
         <div class="container">
-            <h1>SolicitaTransparencia</h1>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap;">
+                <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+                    <h1 style="margin: 0;">SolicitaTransparencia</h1>
+                    <span id="app-version" style="font-size: 0.7em; color: #0a4b6e; background: #e2e8f0; padding: 4px 10px; border-radius: 20px; font-weight: normal;">v1.0.0</span>
+                </div>
+            </div>
             <p class="tagline">Solicita el resultado de tu reclamo municipal</p>
         </div>
     </header>
@@ -158,10 +163,10 @@
     </footer>
 
     <!-- JavaScripts -->
-    <script src="js/uiHelpers.js"></script>
-    <script src="js/validaciones.js"></script>
-    <script src="js/mailGenerator.js"></script>
-    <script src="js/app.js"></script>
+    <script src="/js/uiHelpers.js"></script>
+    <script src="/js/validaciones.js"></script>
+    <script src="/js/mailGenerator.js"></script>
+    <script src="/js/app.js"></script>
 
     <!-- Detector de vista de escritorio en móvil -->
     <script>
@@ -237,63 +242,104 @@
         })();
     </script>
 
-  <!-- NOTIFICACIÓN DE NUEVA VERSIÓN -->
-  <div id="pwa-update-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2d3748; color: white; padding: 16px; border-radius: 12px; text-align: center; z-index: 9999; font-family: system-ui, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-    <p style="margin: 0 0 12px 0;">🔄 Nueva versión disponible</p>
-    <button id="update-pwa-btn" style="background: #48bb78; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">Actualizar ahora</button>
-  </div>
+    <!-- NOTIFICACIÓN DE NUEVA VERSIÓN MEJORADA -->
+    <div id="pwa-update-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2d3748; color: white; padding: 16px; border-radius: 12px; text-align: center; z-index: 9999; font-family: system-ui, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+        <p style="margin: 0 0 12px 0;">
+            🔄 Nueva versión <strong id="new-version-number"></strong> disponible
+        </p>
+        <button id="update-pwa-btn" style="background: #48bb78; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600;">Actualizar ahora</button>
+    </div>
 
-  <script>
-    (function() {
-      if (!('serviceWorker' in navigator)) return;
-      
-      let updateNeeded = false;
-      let newWorker = null;
-      
-      // Detectar bucle de recargas
-      let reloadCount = localStorage.getItem('sw-reload-count') || 0;
-      if (reloadCount > 3) {
-        // Bucle detectado - limpiar todo
-        localStorage.clear();
-        caches.keys().then(keys => keys.forEach(key => caches.delete(key)));
-        window.location.reload();
-      }
-      
-      navigator.serviceWorker.register('/sw.js').then(reg => {
-        console.log('SW registrado');
-        
-        // Verificar actualizaciones cada 30 minutos
-        setInterval(() => reg.update(), 30 * 60 * 1000);
-        
-        reg.addEventListener('updatefound', () => {
-          newWorker = reg.installing;
-          
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Hay nueva versión
-              document.getElementById('pwa-update-notification').style.display = 'block';
+    <script>
+        (function() {
+            if (!('serviceWorker' in navigator)) return;
+            
+            let newWorker = null;
+            let newVersion = null;
+            
+            // Detectar bucle de recargas
+            let reloadCount = localStorage.getItem('sw-reload-count') || 0;
+            if (reloadCount > 3) {
+                localStorage.clear();
+                caches.keys().then(keys => keys.forEach(key => caches.delete(key)));
+                window.location.reload();
             }
-          });
-        });
-      });
-      
-      // Botón de actualizar
-      document.getElementById('update-pwa-btn').addEventListener('click', () => {
-        if (newWorker) {
-          // Contar recarga para detectar bucles
-          let count = parseInt(localStorage.getItem('sw-reload-count') || '0');
-          localStorage.setItem('sw-reload-count', count + 1);
-          
-          newWorker.postMessage({ action: 'skipWaiting' });
-          setTimeout(() => window.location.reload(), 100);
-        }
-        document.getElementById('pwa-update-notification').style.display = 'none';
-      });
-      
-      // Resetear contador cuando todo funciona
-      setTimeout(() => localStorage.removeItem('sw-reload-count'), 5000);
-    })();
-  </script>
+            
+            // Función para obtener la versión actual del SW
+            function getCurrentVersion() {
+                fetch('/sw.js?t=' + Date.now())
+                    .then(response => response.text())
+                    .then(text => {
+                        const versionMatch = text.match(/VERSION\s*=\s*['"]([^'"]+)['"]/);
+                        if (versionMatch) {
+                            const version = versionMatch[1];
+                            const versionSpan = document.getElementById('app-version');
+                            if (versionSpan) versionSpan.textContent = `v${version}`;
+                        }
+                    })
+                    .catch(err => console.log('Error al obtener versión:', err));
+            }
+            
+            // Obtener la nueva versión desde sw.js (para mostrarla en la notificación)
+            function fetchNewVersion() {
+                return fetch('/sw.js?t=' + Date.now())
+                    .then(response => response.text())
+                    .then(text => {
+                        const versionMatch = text.match(/VERSION\s*=\s*['"]([^'"]+)['"]/);
+                        return versionMatch ? versionMatch[1] : null;
+                    });
+            }
+            
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+                console.log('SW registrado');
+                getCurrentVersion();
+                
+                // Verificar actualizaciones cada 30 minutos
+                setInterval(() => reg.update(), 30 * 60 * 1000);
+                
+                reg.addEventListener('updatefound', () => {
+                    newWorker = reg.installing;
+                    
+                    // Obtener la nueva versión para mostrarla
+                    fetchNewVersion().then(version => {
+                        newVersion = version;
+                    });
+                    
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // Mostrar notificación con el número de la nueva versión
+                            const notification = document.getElementById('pwa-update-notification');
+                            const versionSpan = document.getElementById('new-version-number');
+                            if (versionSpan && newVersion) {
+                                versionSpan.textContent = `v${newVersion}`;
+                            }
+                            if (notification) notification.style.display = 'block';
+                        }
+                    });
+                });
+            }).catch(err => {
+                console.error('Error al registrar SW:', err);
+            });
+            
+            // Botón de actualizar
+            const updateBtn = document.getElementById('update-pwa-btn');
+            if (updateBtn) {
+                updateBtn.addEventListener('click', () => {
+                    if (newWorker) {
+                        let count = parseInt(localStorage.getItem('sw-reload-count') || '0');
+                        localStorage.setItem('sw-reload-count', count + 1);
+                        newWorker.postMessage({ action: 'skipWaiting' });
+                        setTimeout(() => window.location.reload(), 100);
+                    }
+                    const notification = document.getElementById('pwa-update-notification');
+                    if (notification) notification.style.display = 'none';
+                });
+            }
+            
+            // Resetear contador cuando todo funciona
+            setTimeout(() => localStorage.removeItem('sw-reload-count'), 5000);
+        })();
+    </script>
 </body>
 
 </html>
