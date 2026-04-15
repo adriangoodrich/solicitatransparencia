@@ -237,32 +237,73 @@
         })();
     </script>
 
-    <!-- Service Worker con actualización automática -->
-    <script>
-        let refreshing = false;
+     <!-- NOTIFICACIÓN DE NUEVA VERSIÓN PARA PWA -->
+  <div id="pwa-update-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2d3748; color: white; padding: 16px; border-radius: 12px; text-align: center; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); font-family: system-ui, sans-serif;">
+    <p style="margin: 0 0 12px 0; font-size: 16px;">🔄 Nueva versión disponible (v<span id="new-version-display"></span>)</p>
+    <button id="update-pwa-btn" style="background: #48bb78; color: white; border: none; padding: 10px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px;">Actualizar ahora</button>
+  </div>
 
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-            if (refreshing) return;
-            refreshing = true;
-            window.location.reload();
+  <script>
+    if ('serviceWorker' in navigator) {
+      let refreshing = false;
+      let newWorker = null;
+
+      // Cuando el Service Worker cambia, recargar la página
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (refreshing) return;
+        refreshing = true;
+        window.location.reload();
+      });
+
+      navigator.serviceWorker.register('/sw.js').then(registration => {
+        console.log('Service Worker registrado:', registration);
+        
+        // Verificar actualizaciones cada hora
+        setInterval(() => {
+          registration.update();
+        }, 60 * 60 * 1000);
+        
+        // Detectar nueva versión
+        registration.addEventListener('updatefound', () => {
+          newWorker = registration.installing;
+          console.log('Nuevo Service Worker detectado');
+          
+          newWorker.addEventListener('statechange', () => {
+            console.log('Estado del nuevo worker:', newWorker.state);
+            
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Mostrar notificación al usuario
+              const notification = document.getElementById('pwa-update-notification');
+              if (notification) {
+                // Mostrar número de versión si está disponible
+                fetch('/sw.js').then(res => res.text()).then(text => {
+                  const versionMatch = text.match(/APP_VERSION\s*=\s*['"]([^'"]+)['"]/);
+                  if (versionMatch) {
+                    document.getElementById('new-version-display').textContent = versionMatch[1];
+                  }
+                });
+                notification.style.display = 'block';
+              }
+            }
+          });
         });
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => {
-                    console.log('Service Worker registrado');
-                    registration.addEventListener('updatefound', () => {
-                        const newWorker = registration.installing;
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                setTimeout(() => window.location.reload(), 1500);
-                            }
-                        });
-                    });
-                })
-                .catch(error => console.error('Error SW:', error));
+      }).catch(err => {
+        console.error('Error al registrar SW:', err);
+      });
+      
+      // Botón para actualizar
+      document.getElementById('update-pwa-btn')?.addEventListener('click', () => {
+        if (newWorker) {
+          newWorker.postMessage({ action: 'skipWaiting' });
+          const notification = document.getElementById('pwa-update-notification');
+          if (notification) notification.style.display = 'none';
+        } else {
+          // Fallback: recargar la página
+          window.location.reload();
         }
-    </script>
+      });
+    }
+  </script>
 </body>
 
 </html>
